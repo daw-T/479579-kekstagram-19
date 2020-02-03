@@ -13,9 +13,9 @@ var randomNumber = function (firstNumber, lastNumber) {
 
 var getComment = function (arrMessages, arrNames) {
   return {
-    'avatar' : 'img/avatar-' + randomNumber(1, 6) + '.svg',
-    'message' : randomArrayElement(arrMessages),
-    'name' : randomArrayElement(arrNames)
+    'avatar': 'img/avatar-' + randomNumber(1, 6) + '.svg',
+    'message': randomArrayElement(arrMessages),
+    'name': randomArrayElement(arrNames)
   };
 };
 
@@ -33,17 +33,17 @@ var getArrayOfObjectsDescription = function (b) {
 
 var getObject = function (a) {
   return {
-    'url' : 'photos/' + a + '.jpg',
-    'description' : getArrayOfObjectsDescription(a),
-    'likes' : randomNumber(15, 200),
-    'comments' : getArrayOfObjectsComments(),
+    'url': 'photos/' + a + '.jpg',
+    'description': getArrayOfObjectsDescription(a),
+    'likes': randomNumber(15, 200),
+    'comments': getArrayOfObjectsComments(),
   };
 };
 
 var changePropertiesPicture = function (item, pic) {
   item.querySelector('.picture__img').setAttribute('src', pic.url);
-  item.querySelector('.picture__comments').textContent = pic.comments.length ;
-  item.querySelector('.picture__likes').textContent = pic.likes ;
+  item.querySelector('.picture__comments').textContent = pic.comments.length;
+  item.querySelector('.picture__likes').textContent = pic.likes;
 };
 
 var pictureTemplate = document.querySelector('#picture')
@@ -54,6 +54,6 @@ var fragment = document.createDocumentFragment();
 for (var j = 0; j < 25; j++) {
   var pictureElement = pictureTemplate.cloneNode(true);
 
-  changePropertiesPicture(pictureElement, getObject(j+1));
+  changePropertiesPicture(pictureElement, getObject(j + 1));
   fragment.appendChild(pictureElement);
 }
