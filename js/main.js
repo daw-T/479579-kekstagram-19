@@ -57,3 +57,6 @@ for (var j = 0; j < 25; j++) {
   changePropertiesPicture(pictureElement, getObject(j + 1));
   fragment.appendChild(pictureElement);
 }
+
+var pictures = document.querySelector('.pictures');
+pictures.appendChild(fragment);
