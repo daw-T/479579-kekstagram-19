@@ -1,6 +1,6 @@
 /* Общие стили. Каркас
    ========================================================================== */
-
+/* stylelint-disable */
 @font-face {
   font-family: "Open Sans";
   src: url("../fonts/OpenSansCondensed-Bold.woff2") format("woff2"),
@@ -1442,4 +1442,12 @@ main {
     -ms-grid-row-span: 3;
     grid-row: 1 / span 3;
   }
+}
+
+/**
+ * Обводит красным невалидный input
+ */
+
+.text__hashtags-invalid {
+  border-color: red;
 }
