@@ -7,12 +7,15 @@ var uploadForm = document.querySelector('#upload-select-image');
 var uploadOpen = uploadForm.querySelector('#upload-file');
 var uploadImg = uploadForm.querySelector('.img-upload__overlay');
 var uploadClose = uploadForm.querySelector('#upload-cancel');
+var uploadHashtags = document.querySelector('.text__hashtags');
+var uploadTextarea = document.querySelector('.text__description');
 
 var onPopupEscPress = function (evt) {
-  if (evt.key === ESC_KEY) {
+  if (evt.key === ESC_KEY && document.activeElement !== uploadHashtags && document.activeElement !== uploadTextarea) {
     closePopup();
   }
 };
+
 
 var openPopup = function () {
   uploadImg.classList.remove('hidden');
@@ -48,6 +51,14 @@ effectPin.addEventListener('mouseup', function (evt) {
   inputEffectValue.setAttribute('value', getPercentages(evt));
 });
 
+var uploadRadioButtons = document.querySelectorAll('.effects__radio');
+
+for (var c = 0; c < uploadRadioButtons.length; c++) {
+  uploadRadioButtons[c].addEventListener('change', function () {
+    var inputEffectValue = document.querySelector('.effect-level__value');
+    inputEffectValue.setAttribute('value', '100');
+  });
+}
 
 var xPin = function (evt) {
   return evt.clientX;
@@ -72,15 +83,13 @@ uploadEffectItem.addEventListener('change', function () {
 
 });
 
-var uploadHashtags = document.querySelector('.text__hashtags');
-
 uploadHashtags.addEventListener('change', function () {
   var result = testArrHashtags(uploadHashtags.value.split(' '));
 
   if (!result) {
-    uploadHashtags.classList.add('text__hashtags-invalid');
+    uploadHashtags.classList.add('input-invalid');
   } else {
-    uploadHashtags.classList.remove('text__hashtags-invalid');
+    uploadHashtags.classList.remove('input-invalid');
   }
 });
 
@@ -91,6 +100,18 @@ var testArrHashtags = function (array) {
     return false;
   }
 
+  array = array.map(function (el) {
+    return el.toUpperCase();
+  });
+
+  array.sort();
+
+  for (var n = 0; n < array.length - 1; n++) {
+    if (array[n] === array[n + 1]) {
+      return false;
+    }
+  }
+
   for (var i = 0; i < array.length; i++) {
     result = result && testHashtag(array[i]);
   }
@@ -98,7 +119,7 @@ var testArrHashtags = function (array) {
 };
 
 var testHashtag = function (value) {
-  var hashtagRegex = /^#\w{1,30}$/i;
+  var hashtagRegex = /^#[a-zа-яё0-9]{1,19}$/i;
   var result = value.search(hashtagRegex);
   return result !== -1;
 };
@@ -108,6 +129,14 @@ uploadHashtags.addEventListener('invalid', function () {
     uploadHashtags.setCustomValidity('хэш-тэг должен состоять минимум из 2-х символов');
   } else if (uploadHashtags.validity.patternMismatch) {
     uploadHashtags.setCustomValidity('неверный формат хэштега');
+  } else {
+    uploadHashtags.setCustomValidity('');
+  }
+});
+
+uploadTextarea.addEventListener('invalid', function () {
+  if (uploadTextarea.validity.tooLong) {
+    uploadTextarea.setCustomValidity('комментарий не должен превышать 140 символов');
   } else {
     uploadHashtags.setCustomValidity('');
   }

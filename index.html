@@ -30,7 +30,7 @@
     <section class="img-upload">
       <div class="img-upload__wrapper">
         <h2 class="img-upload__title  visually-hidden">Загрузка фотографии</h2>
-        <form class="img-upload__form" id="upload-select-image" method="post" enctype="multipart/form-data" autocomplete="off">
+        <form class="img-upload__form" id="upload-select-image" action="https://js.dump.academy/kekstagram" method="post" enctype="multipart/form-data" autocomplete="off">
 
           <!-- Изначальное состояние поля для загрузки изображения -->
           <fieldset class="img-upload__start">
@@ -74,9 +74,10 @@
                   <li class="effects__item">
                     <input type="radio" class="effects__radio  visually-hidden" name="effect" id="effect-none" value="none" checked>
                     <label for="effect-none" class="effects__label">
-                      <span class="effects__preview  effects__preview--none" tabindex="0" autofocus>Превью фото без эффекта</span>
+                      <span class="effects__preview  effects__preview--none" tabindex="0">Превью фото без эффекта</span>
                       Оригинал
                     </label>
+                  </li>
                   </li>
                   <li class="effects__item">
                     <input type="radio" class="effects__radio  visually-hidden" name="effect" id="effect-chrome" value="chrome">
@@ -118,8 +119,8 @@
 
               <!-- Добавление хэш-тегов и комментария к изображению -->
               <fieldset class="img-upload__text text">
-                <input class="text__hashtags" name="hashtags" placeholder="#хэш-тег" minlength='2' pattern='^(#\w{1,19} *){1,5}$'>
-                <textarea class="text__description" name="description" placeholder="Ваш комментарий..."></textarea>
+                <input class="text__hashtags" name="hashtags" placeholder="#хэш-тег" minlength='2' pattern='^(#[a-zа-яё0-9] *){1,5}$'>
+                <textarea class="text__description" name="description" maxlength='140' placeholder="Ваш комментарий..."></textarea>
               </fieldset>
 
               <!-- Кнопка для отправки данных на сервер -->
@@ -185,7 +186,7 @@
 <footer class="page-footer  container">
   <div class="page-footer__wrapper">
     <div class="page-footer__copyright  copyright">
-      <a class="copyright__link  copyright__link--image" href="https://htmlacademy.ru/intensive/javascript"><img src="img/htmla-logo.svg" width="130" height="45" alt="HTML Academy"></a>
+      <a class="copyright__link  copyright__link--image" href="https://js.dump.academy/kekstagram"><img src="img/htmla-logo.svg" width="130" height="45" alt="HTML Academy"></a>
       <p>Сделано в <a class="copyright__link  copyright__link--text" href="https://htmlacademy.ru/intensive/javascript">HTML Academy</a> &copy; 2018</p>
     </div>
     <ul class="page-footer__contacts  contacts">

@@ -1448,6 +1448,6 @@ main {
  * Обводит красным невалидный input
  */
 
-.text__hashtags-invalid {
+.input-invalid {
   border-color: red;
 }
