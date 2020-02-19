@@ -84,7 +84,15 @@ uploadEffectItem.addEventListener('change', function () {
 });
 
 uploadHashtags.addEventListener('change', function () {
-  var result = testArrHashtags(uploadHashtags.value.split(' '));
+  var items = uploadHashtags.value.split(' ');
+  var resultItems = [];
+  for (var d = 0; d < items.length; d++) {
+    if (items[d] !== '') {
+      resultItems.push(items[d]);
+    }
+  }
+
+  var result = testArrHashtags(resultItems);
 
   if (!result) {
     uploadHashtags.classList.add('input-invalid');
