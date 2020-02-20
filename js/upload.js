@@ -43,18 +43,75 @@ uploadClose.addEventListener('keydown', function (evt) {
   }
 });
 
+var uploadRadioButtons = document.querySelectorAll('.effects__radio');
+
 var effectLine = document.querySelector('.effect-level__line');
 var effectPin = effectLine.querySelector('.effect-level__pin');
 
+var activeRadioValue = function (items) {
+  for (var i = 0; i < items.length; i++) {
+    if (items[i].checked) {
+      return items[i].value;
+    }
+  }
+  return 'none';
+};
+
 effectPin.addEventListener('mouseup', function (evt) {
   var inputEffectValue = document.querySelector('.effect-level__value');
-  inputEffectValue.setAttribute('value', getPercentages(evt));
+  var percentage = getPercentages(evt);
+  inputEffectValue.setAttribute('value', percentage);
+
+  var activeRadio = activeRadioValue(uploadRadioButtons);
+
+  if (activeRadio !== 'none') {
+    var filterValue = intensityEffects[activeRadio](percentage);
+    uploadImgPreview.style.filter = filterValue;
+  }
 });
 
-var uploadRadioButtons = document.querySelectorAll('.effects__radio');
+var uploadImgPreview = document.querySelector('.img-upload__preview');
+var effects = {
+  chrome: 'effects__preview--chrome',
+  sepia: 'effects__preview--sepia',
+  marvin: 'effects__preview--marvin',
+  phobos: 'effects__preview--phobos',
+  heat: 'effects__preview--heat',
+  none: 'effects__preview--none'
+};
+
+var intensityEffects = {
+  chrome: function (level) {
+    return 'grayscale(' + level / 100 + ')';
+  },
+  sepia: function (level) {
+    return 'sepia(' + level / 100 + ')';
+  },
+  marvin: function (level) {
+    return 'invert(' + level + '%)';
+  },
+  phobos: function (level) {
+    return 'blur(' + Math.ceil(level / 33, 33) + 'px' + ')';
+  },
+  heat: function (level) {
+    return 'brightness(' + Math.ceil(level / 33, 33) + ')';
+  }
+};
+
+var clearAlleffects = function () {
+  uploadImgPreview.style.filter = '';
+  for (var effectsKey in effects) {
+    if (effects.hasOwnProperty(effectsKey)) {
+      uploadImgPreview.classList.remove(effects[effectsKey]);
+    }
+  }
+};
 
 for (var c = 0; c < uploadRadioButtons.length; c++) {
-  uploadRadioButtons[c].addEventListener('change', function () {
+  uploadRadioButtons[c].addEventListener('change', function (evt) {
+    clearAlleffects();
+    uploadImgPreview.classList.add(effects[evt.target.value]);
+
     var inputEffectValue = document.querySelector('.effect-level__value');
     inputEffectValue.setAttribute('value', '100');
   });
@@ -149,3 +206,5 @@ uploadTextarea.addEventListener('invalid', function () {
     uploadHashtags.setCustomValidity('');
   }
 });
+
+
