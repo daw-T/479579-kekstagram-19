@@ -159,32 +159,27 @@ uploadHashtags.addEventListener('change', function () {
 });
 
 var testArrHashtags = function (array) {
-  var result = true;
-
   if (array.length > 5) {
     return false;
   }
 
-  array = array.map(function (el) {
-    return el.toUpperCase();
-  });
-
-  array.sort();
-
-  for (var n = 0; n < array.length - 1; n++) {
-    if (array[n] === array[n + 1]) {
+  var hashtagValues = new Set();
+  for (var e = 0; e < array.length; e++) {
+    if (testHashtag(array[e]) === false) {
       return false;
     }
+    var hashtagValue = array[e].toUpperCase();
+    if (hashtagValues.has(hashtagValue)) {
+      return false;
+    } else {
+      hashtagValues.add(hashtagValue);
+    }
   }
-
-  for (var i = 0; i < array.length; i++) {
-    result = result && testHashtag(array[i]);
-  }
-  return result;
+  return true;
 };
 
 var testHashtag = function (value) {
-  var hashtagRegex = /^#[a-zа-яё0-9]{1,19}$/i;
+  var hashtagRegex = /^#[a-zа-яёA-ZА-ЯЁ0-9]{1,19}$/i;
   var result = value.search(hashtagRegex);
   return result !== -1;
 };
@@ -206,5 +201,3 @@ uploadTextarea.addEventListener('invalid', function () {
     uploadHashtags.setCustomValidity('');
   }
 });
-
-
